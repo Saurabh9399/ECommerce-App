@@ -8,8 +8,14 @@ import {
   CardActions,
   CardMedia,
 } from '@mui/material';
+import { useDispatch } from "react-redux"
+import { addToCart } from '../redux/cartSlice';
 
 const ProductCard = ({ product }) => {
+    const dispatch = useDispatch()
+    const handleAddToCart = (product) => { 
+        dispatch(addToCart(product))
+    }
   return (
     <Grid item key={product.id} xs={12} sm={6} md={4}>
       <Card sx={{ width: 300, height: '400px', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
@@ -26,7 +32,7 @@ const ProductCard = ({ product }) => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button variant="contained" color="primary">
+          <Button variant="contained" color="primary" onClick={() => handleAddToCart(product)}>
             Add to Cart
           </Button>
         </CardActions>

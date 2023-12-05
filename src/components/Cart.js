@@ -1,14 +1,12 @@
 // src/components/Cart.js
 import React from 'react';
-import { Container, Typography, Button, Grid, Paper } from '@mui/material';
+import { Container, Typography, Button, Grid } from '@mui/material';
+import {useSelector} from "react-redux"
+import CartItemCard from './CartItemCard';
 
 const Cart = () => {
   // Assuming you have a list of items in the cart
-  const cartItems = [
-    { id: 1, name: 'Product 1', price: 19.99, quantity: 2 },
-    { id: 2, name: 'Product 2', price: 29.99, quantity: 1 },
-    // Add more items as needed
-  ];
+  const cartItems = useSelector((store)=> store.cart)
 
   return (
     <div>
@@ -22,15 +20,8 @@ const Cart = () => {
           <Typography variant="body1">Your cart is empty.</Typography>
         ) : (
           <Grid container spacing={3}>
-            {cartItems.map((item) => (
-              <Grid item xs={12} key={item.id}>
-                <Paper sx={{ padding: '1rem' }}>
-                  <Typography variant="h6">{item.name}</Typography>
-                  <Typography variant="body1">Price: ${item.price}</Typography>
-                  <Typography variant="body1">Quantity: {item.quantity}</Typography>
-                  {/* Add more details or actions as needed */}
-                </Paper>
-              </Grid>
+            {cartItems.map((item,i) => (
+               <CartItemCard product={item} key={i}/>
             ))}
           </Grid>
         )}

@@ -50,8 +50,8 @@ const Home = () => {
       </Typography>
 
       <Grid container spacing={3}>
-        {products.map((product) => (
-          <ProductCard product={product}/>
+        {products.map((product,i) => (
+          <ProductCard product={product} key={i}/>
         ))}
       </Grid>
     </Container>
