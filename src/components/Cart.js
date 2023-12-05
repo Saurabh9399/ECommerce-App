@@ -1,7 +1,6 @@
 // src/components/Cart.js
 import React from 'react';
 import { Container, Typography, Button, Grid, Paper } from '@mui/material';
-import Footer from './Footer';
 
 const Cart = () => {
   // Assuming you have a list of items in the cart
