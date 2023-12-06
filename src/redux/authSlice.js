@@ -8,18 +8,21 @@ const authSlice = createSlice({
   },
   reducers: {
     setUser: (state, action) => {
-        localStorage.setItem("user", state.user)
+      localStorage.setItem("user", state.user)
       state.user = action.payload;
     },
     setError: (state, action) => {
       state.error = action.payload;
     },
     logoutUser: (state) => {
-        localStorage.setItem('user', null);
+        localStorage.setItem("user", null); 
       state.user = null;
     },
     getUser: (state) => {
-        state.user = localStorage.getItem('user');
+        console.log("getUser", state);
+        if(localStorage.getItem("user")){
+            state.user = localStorage.getItem('user');
+        }
     }
   },
 });

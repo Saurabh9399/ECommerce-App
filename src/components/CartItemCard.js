@@ -1,6 +1,10 @@
 import React from 'react';
-import { Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { Card, CardContent, CardMedia, Typography, IconButton } from '@mui/material';
 import { styled } from '@mui/system';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import { useDispatch } from 'react-redux';
+import { removeFromCart, addToCart } from '../redux/cartSlice';
 
 const StyledCard = styled(Card)({
   maxWidth: 300,
@@ -17,7 +21,16 @@ const StyledCardMedia = styled(CardMedia)({
 });
 
 const CartItemCard = ({ product }) => {
-    console.log(product);
+  const dispatch = useDispatch();
+
+  const handleRemoveFromCart = () => {
+    dispatch(removeFromCart(product.id));
+  };
+
+  const handleAddToCart = () => {
+    dispatch(addToCart({ id: product.id, title: product.title, price: product.price }));
+  };
+
   return (
     <StyledCard>
       <StyledCardMedia component="img" alt={product.title} image={product.image} />
@@ -26,11 +39,20 @@ const CartItemCard = ({ product }) => {
           {product.title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {product.description}x
+          Quantity: {product.quantity}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {product.description}
         </Typography>
         <Typography variant="h6" color="primary">
           ${product.price}
         </Typography>
+        <IconButton onClick={handleRemoveFromCart}>
+          <RemoveIcon />
+        </IconButton>
+        <IconButton onClick={handleAddToCart}>
+          <AddIcon />
+        </IconButton>
       </CardContent>
     </StyledCard>
   );

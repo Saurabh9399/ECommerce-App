@@ -7,6 +7,7 @@ import CartItemCard from './CartItemCard';
 const Cart = () => {
   // Assuming you have a list of items in the cart
   const cartItems = useSelector((store)=> store.cart)
+  const totalSum = cartItems.reduce((sum, item) => sum + item.quantity * item.price, 0);
 
   return (
     <div>
@@ -19,11 +20,16 @@ const Cart = () => {
         {cartItems.length === 0 ? (
           <Typography variant="body1">Your cart is empty.</Typography>
         ) : (
+            <>
           <Grid container spacing={3}>
             {cartItems.map((item,i) => (
                <CartItemCard product={item} key={i}/>
             ))}
           </Grid>
+          <Typography variant="h5" gutterBottom>
+            Total: ${totalSum.toFixed(2)}
+          </Typography>
+          </>
         )}
 
         <Button variant="contained" color="primary" sx={{ marginTop: '1rem' }}>

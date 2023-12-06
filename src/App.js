@@ -7,6 +7,7 @@ import Cart from './components/Cart';
 import AuthForm from './components/AuthForm';
 import PrivateRoute from './components/PrivateRoute';
 import Footer from './components/Footer';
+import ProductDetail from './components/ProductDetails';
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
           element={<PrivateRoute element={<Home />} />}
         />
         <Route path="/cart" element={<PrivateRoute element={<Cart />}/>} />
+        <Route path="/product/:productId" element={<PrivateRoute element={<ProductDetail/>}/>} />
         <Route path="/auth" element={<AuthForm />} />
       </Routes>
       <Footer/>
