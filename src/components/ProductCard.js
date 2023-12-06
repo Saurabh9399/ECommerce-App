@@ -45,7 +45,13 @@ const ProductCard = ({ product }) => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button variant="contained" color="primary" onClick={() => handleAddToCart(product)}>
+          <Button variant="contained" color="primary" onClick={(e) =>
+            {
+              e.stopPropagation();
+              handleAddToCart(product)}
+            }
+          
+          >
             Add to Cart
           </Button>
         </CardActions>
