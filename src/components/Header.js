@@ -31,10 +31,7 @@ const Header = () => {
      dispatch(searchResult(val));
   };
 
-  useEffect(() => {
-    // Call handleSearchChange in useEffect when searchText changes
-    handleSearchChange(searchText);
-  }, [searchText]);
+ 
 
   return (
     <AppBar position="static" sx={{ background: '#2196F3' }}>
