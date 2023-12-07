@@ -1,5 +1,5 @@
 // src/components/Home.js
-import React from "react";
+import React, { useEffect } from "react";
 import { useQuery } from "react-query";
 import {
   Container,
@@ -8,6 +8,8 @@ import {
   CircularProgress,
 } from "@mui/material";
 import ProductCard from "./ProductCard";
+import { setItems } from "../redux/productsSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const fetchProducts = async () => {
   const response = await fetch("https://fakestoreapi.com/products");
@@ -23,6 +25,15 @@ const Home = () => {
     isLoading,
     isError,
   } = useQuery("products", fetchProducts);
+
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+      dispatch(setItems(products));
+  },[products])
+
+  const productsData = useSelector(store =>store.products.items);
+
 
   if (isLoading) {
     return (
@@ -50,7 +61,7 @@ const Home = () => {
       </Typography>
 
       <Grid container spacing={3}>
-        {products.map((product,i) => (
+        {productsData?.map((product,i) => (
           <ProductCard product={product} key={i}/>
         ))}
       </Grid>

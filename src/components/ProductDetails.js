@@ -1,20 +1,15 @@
-// ProductDetail.js
 import React from 'react';
-import { useSelector,useDispatch } from "react-redux"
-import { Container, Typography, Button, Card, CardContent, CardActions, CardMedia } from '@mui/material';
+import { useSelector, useDispatch } from "react-redux";
+import { Container, Typography, Button, Card, CardContent, CardActions, CardMedia, Rating } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import { addToCart } from '../redux/cartSlice';
 
 const ProductDetail = () => {
-  const dispatch = useDispatch(); // Assuming your product has an ID
-  const product = useSelector(store => store.product.productDetail)
-  // Fetch product details based on the productId (you can use React Query or other data fetching libraries)
-
- 
+  const dispatch = useDispatch();
+  const product = useSelector(store => store.product.productDetail);
 
   const handleAddToCart = () => {
-    // Implement your logic for adding to the cart
     dispatch(addToCart(product));
   };
 
@@ -35,6 +30,12 @@ const ProductDetail = () => {
           </Typography>
           <Typography variant="h6" color="primary">
             ${product.price}
+          </Typography>
+
+          {/* Rating */}
+          <Rating name="product-rating" value={product.rating.rate} precision={0.5} readOnly />
+          <Typography variant="body2" color="text.secondary" paragraph>
+            ({product.rating.count} ratings)
           </Typography>
         </CardContent>
         <CardActions>
