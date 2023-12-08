@@ -1,25 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const productsSlice = createSlice({
-    name:"search",
+    name:"products",
     initialState: {
-        items:[]
+        items:[],
+        filteredItems:[]
     },
     reducers: {
         setItems:(state,action)=>{
             state.items = action.payload;
         },
-        searchResult:(state, action)=>{
-            const filteredProducts = state.items.filter(product =>
-                product.title.toLowerCase().includes(action.payload.toLowerCase())
-              );
-              state.items = filteredProducts;
+        setFilteredItems:(state,action)=>{
+            state.filteredItems = action.payload;
         }
-        
     }
 })
 
 
 export default productsSlice.reducer;
 
-export const {setItems,searchResult} = productsSlice.actions;
+export const {setItems,searchResult,setFilteredItems} = productsSlice.actions;

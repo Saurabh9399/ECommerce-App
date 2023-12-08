@@ -1,12 +1,7 @@
 // src/components/Home.js
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import {
-  Container,
-  Typography,
-  Grid,
-  CircularProgress,
-} from "@mui/material";
+import { Container, Typography, Grid, CircularProgress } from "@mui/material";
 import ProductCard from "./ProductCard";
 import { setItems } from "../redux/productsSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,20 +15,28 @@ const fetchProducts = async () => {
 };
 
 const Home = () => {
+  const dispatch = useDispatch();
   const {
     data: products,
     isLoading,
     isError,
   } = useQuery("products", fetchProducts);
-
-  const dispatch = useDispatch();
+  const [showData, setShowData] = useState(products);
 
   useEffect(()=>{
       dispatch(setItems(products));
   },[products])
 
-  const productsData = useSelector(store =>store.products.items);
-
+  
+  const filteredData = useSelector((store) => store.products.filteredItems);
+  
+  console.log(showData,filteredData);
+  useEffect(() => {
+    if (filteredData) {
+      // Only update the state if filteredData is available
+      setShowData(filteredData);
+    }
+  }, [filteredData]);
 
   if (isLoading) {
     return (
@@ -61,9 +64,13 @@ const Home = () => {
       </Typography>
 
       <Grid container spacing={3}>
-        {productsData?.map((product,i) => (
-          <ProductCard product={product} key={i}/>
-        ))}
+        {showData
+          ? showData?.map((product, i) => (
+              <ProductCard product={product} key={i} />
+            ))
+          : products?.map((product, i) => (
+              <ProductCard product={product} key={i} />
+            ))}
       </Grid>
     </Container>
   );

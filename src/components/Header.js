@@ -6,7 +6,7 @@ import Logout from './LogoutComponent';
 import { useDispatch, useSelector } from 'react-redux';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import SearchIcon from '@mui/icons-material/Search';
-import { searchResult } from '../redux/productsSlice';
+import { setFilteredItems, setItems } from '../redux/productsSlice';
 
 // Custom Material-UI logo component
 const MaterialUILogo = (props) => (
@@ -19,17 +19,32 @@ const MaterialUILogo = (props) => (
 const Header = () => {
   const user = useSelector(store => store.auth.user);
   const cart = useSelector(store => store.cart);
+  const products = useSelector(store => store.products.items);
   const dispatch = useDispatch();
 
   const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
 
   const [searchText, setSearchText] = useState('');
 
-  const handleSearchChange = ({val}) => {
-    setSearchText(val);
-    // Implement your search logic here (e.g., filter products based on searchText)
-     dispatch(searchResult(val));
+  const handleSearchChange = (e) => {
+    console.log(e.target.value);
+    setSearchText(e.target.value);
+
+    
+
+    const filteredProducts = products.filter(product =>
+      product.title.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+
+    console.log(filteredProducts);
+
+    dispatch(setFilteredItems(filteredProducts))
+
   };
+
+  useEffect(()=>{
+
+  },[searchText])
 
  
 
@@ -50,7 +65,7 @@ const Header = () => {
           variant="outlined"
           size="small"
           value={searchText}
-          onChange={(e)=>handleSearchChange(e.target.value)}
+          onChange={handleSearchChange}
           sx={{ marginLeft: 'auto', marginRight: 2, background: '#fff', borderRadius: '4px' }}
           InputProps={{
             endAdornment: (
